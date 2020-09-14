@@ -1,0 +1,146 @@
+swagger: "2.0"
+
+info:
+  version: "1.0.0"
+  title: "Swagger Book"
+
+host: "localhost:50050"
+
+tags:
+- name: "owner"
+  description: Secured Owner-only calls
+- name: customers
+  description: Operations available to everyone
+
+schemes:
+- http
+
+paths:
+
+  /api/books/allbook:
+    get:
+      tags:
+      - "customers"
+      summary: "searches all books"
+      description: "By passing in the appropriate options, you can search for available books in the Library"
+      operationId: "getAllBooks"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "search results matching criteria"
+          schema:
+            items:
+              $ref: "#/components/schemas/Books"
+        "400":
+          description: "bad input parameter"
+        "403":
+          description: "forbidden"
+
+  /api/books/{id}:
+    get:
+      tags:
+      - "customers"
+      summary: "searches a book by id"
+      description: "By passing in the appropriate options, you can search for available books in the Library"
+      operationId: "getBookById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "pass an search id for looking up books"
+        required: true
+        type: "integer"
+      responses:
+        "200":
+          description: "search results matching criteria"
+          schema:
+            $ref: "#/components/schemas/Book"
+        "400":
+          description: "bad input parameter"
+
+  /api/addbook:
+    post:
+      tags:
+      - "owner"
+      summary: "insert a new book"
+      operationId: "addBook"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      description: "Adds a new book to the Library"
+      parameters:
+      - name: "body"
+        in: "body"
+        required: true
+        schema:
+          $ref: "#/components/schemas/NewBook"
+      responses:
+        "201":
+          description: "item created"
+        "400":
+          description: "invalid input, object invalid"
+        "409":
+          description: "an existing item already exists"
+
+  /api/deletebook/{id}:
+    delete:
+      tags:
+      - "owner"
+      summary: "remove a book by id"
+      operationId: "deleteBookById"
+      description: "delete a book by id"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "pass an search id for looking up books"
+        required: true
+        type: integer
+      responses:
+        "201":
+          description: "item deleted"
+        "400":
+          description: "invalid input, object invalid"
+        "409":
+          description: "an existing item already exists"
+
+components:
+
+  schemas:
+    Books:
+      type: array
+      items:
+        $ref: "#/components/schemas/Book"
+
+    Book:
+      type: object
+      required:
+        - id
+        - title
+        - author
+
+      properties:
+        id:
+          type: integer
+          example: 123
+        title:
+          type: string
+          example: "A Tale of Two Cities"
+        author:
+          type: string
+          example: "Charles Dickens"
+          
+    NewBook:
+      type: object
+      required:
+      - title
+      - author
+      properties:
+        title:
+          type: string
+          example: "A Tale of Two Cities"
+        author:
+          type: string
+          example: "Charles Dickens"

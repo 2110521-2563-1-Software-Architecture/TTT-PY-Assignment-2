@@ -1,0 +1,123 @@
+openapi: 3.0.0
+servers:
+  - description: SwaggerHub API Auto Mocking
+    url: http://localhost:50050
+info:
+  description: This is a simple API
+  version: "1.0.0"
+  title: Book Service
+tags:
+  - name: owner
+    description: Secured Owner-only calls
+  - name: customers
+    description: Operations available to everyone
+paths:
+  /api/books/allbook:
+    get:
+      tags:
+        - customers
+      summary: searches all books
+      operationId: searchAllBooks
+      description: |
+        By passing in the appropriate options, you can search for
+        available books in the Library
+      responses:
+        "200":
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Books"
+        "400":
+          description: bad input parameter
+        "403":
+          description: forbidden
+
+  /api/books/{id}:
+    get:
+      tags:
+        - customers
+      summary: searches a book by id
+      operationId: getBookId
+      description: |
+        By passing in the appropriate options, you can search for
+        available books in the Library
+      parameters:
+        - in: path
+          name: id
+          description: pass an search id for looking up books
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Book"
+        "400":
+          description: bad input parameter
+  /api/addbook:
+    post:
+      tags:
+        - owner
+      summary: insert a new book
+      operationId: addBook
+      description: Adds a new book to the Library
+      responses:
+        "201":
+          description: item created
+        "400":
+          description: "invalid input, object invalid"
+        "409":
+          description: an existing item already exists
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Book"
+  /api/deletebook/{id}:
+    delete:
+      tags:
+        - owner
+      summary: remove a book by id
+      operationId: deleteBook
+      description: delete a book by id
+      parameters:
+        - in: path
+          name: id
+          description: pass an search id for looking up books
+          required: true
+          schema:
+            type: integer
+      responses:
+        "201":
+          description: item deleted
+        "400":
+          description: "invalid input, object invalid"
+        "409":
+          description: an existing item already exists
+
+components:
+  schemas:
+    Books:
+      type: array
+      items:
+        $ref: "#/components/schemas/Book"
+    Book:
+      type: object
+      required:
+        - id
+        - title
+        - author
+      properties:
+        id:
+          type: integer
+          example: 123
+        title:
+          type: string
+          example: "A Tale of Two Cities"
+        author:
+          type: string
+          example: "Charles Dickens"

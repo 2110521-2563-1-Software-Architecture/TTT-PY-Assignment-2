@@ -1,0 +1,4 @@
+How to install
+1. install Node.js # https://nodejs.org/en/
+2. install packages
+  > npm install

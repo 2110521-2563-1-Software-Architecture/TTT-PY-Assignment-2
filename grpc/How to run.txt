@@ -1,0 +1,9 @@
+How to run
+1. run "node server.js"
+2. run "go run client.go <command>" in another shell
+	command:
+	list                            List all books
+  	insert <id> <title> <author>    Insert a book
+  	get <id>                        Get a book by its ID
+  	delete <id>                     Delete a book by its ID
+  	watch                           Watch for inserted books

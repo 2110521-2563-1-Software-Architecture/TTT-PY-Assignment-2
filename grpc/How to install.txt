@@ -1,0 +1,12 @@
+How to install
+1. install Node.js # https://nodejs.org/en/
+2. install Go # https://golang.org/
+3. install Protoc >= 3.0.0
+  for MacOS: > brew install protobuf
+  for Linux: > apt install -y protobuf-compiler
+  for Windows: After install Go, run the following commands:
+    > go get github.com/golang/protobuf/proto
+    > go get golang.org/x/net/context
+    > go get google.golang.org/grpc
+4. install packages
+  > npm install

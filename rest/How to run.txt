@@ -1,0 +1,8 @@
+How to run
+1. run "npm start"
+2. run "node client.js <command>" in another shell
+	command:
+	list                            List all books
+  	insert <id> <title> <author>    Insert a book
+  	get <id>                        Get a book by its ID
+  	delete <id>                     Delete a book by its ID
