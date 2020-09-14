@@ -166,6 +166,7 @@ func doInsert(ctx context.Context, args ...string) {
 	if err == nil {
 		fmt.Println(i1)
 	}
+	start := time.Now()
 	for i := 0;  i<i1; i++ {
 		book := &pb.Book{
 			Id:     int32(i),
@@ -181,6 +182,8 @@ func doInsert(ctx context.Context, args ...string) {
 		fmt.Println("Server response:")
 		printRespAsJson(r)
 	}
+	duration := time.Since(start)
+	fmt.Println(duration.Nanoseconds()/1000000)
 }
 
 // doWatch is a basic wrapper around the corresponding book service's RPC.
