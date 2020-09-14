@@ -32,7 +32,8 @@ function addBook(id, title, author) {
       if (error) {
         return console.log(error);
       }
-      console.log(JSON.parse(body));
+      return;
+      // console.log(JSON.parse(body));
     }
   );
 }
@@ -62,12 +63,15 @@ switch (todo) {
     break;
   case "insert":
     var n = process.argv[0];
-    for (i = 0; i < n; i++) {
+    for (i = 1; i <= n; i++) {
       var t0 = performance.now();
-      addBook(i, "bookName", "authorName");
+      for (j = 0; j < i; j++) {
+        addBook(j, "bookName", "authorName");
+      }
       var t1 = performance.now();
-      console.log(t1 - t0 + " milliseconds.");
+      console.log(t1 - t0);
     }
+
     break;
   case "delete":
     deleteBookByID(process.argv[0]);
