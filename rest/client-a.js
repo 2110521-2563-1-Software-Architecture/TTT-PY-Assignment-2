@@ -62,15 +62,13 @@ switch (todo) {
     getBookByID(process.argv[0]);
     break;
   case "insert":
-    var n = process.argv[0];
-    for (i = 1; i <= n; i++) {
-      var t0 = performance.now();
-      for (j = 0; j < i; j++) {
-        addBook(j, "bookName", "authorName");
-      }
-      var t1 = performance.now();
-      console.log(t1 - t0);
+    var n = parseInt(process.argv[0]) || 1;
+    var t0 = performance.now();
+    for (j = 0; j < n; j++) {
+      addBook(j, "bookName", "authorName");
     }
+    var t1 = performance.now();
+    console.log(t1 - t0);
 
     break;
   case "delete":
