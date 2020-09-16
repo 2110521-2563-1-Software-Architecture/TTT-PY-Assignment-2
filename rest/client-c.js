@@ -1,12 +1,22 @@
-const {
-  Worker,
-  isMainThread,
-  parentPort,
-  workerData,
-} = require("worker_threads");
 const request = require("request");
 const commomPath = "http://localhost:50050/api";
+let async = require("async");
 const { performance } = require("perf_hooks");
+
+process.argv.shift(); // skip node.exe
+process.argv.shift(); // skip name of js file
+let n = parseInt(process.argv[0]) || 1;
+
+let list = [];
+
+for (let i = 0; i < n; i++) {
+  list.push(function func(callback) {
+    addBook(i, "title" + i, "author" + i);
+    callback(null, i);
+  });
+}
+
+let maxTimestamp = -1;
 
 function addBook(id, title, author) {
   request.post(
@@ -19,25 +29,15 @@ function addBook(id, title, author) {
       if (error) {
         return console.log(error);
       }
-      // console.log(JSON.parse(body));
+      console.log({});
+      var t1 = performance.now();
+      if (t1 - t0 > maxTimestamp) {
+        maxTimestamp = t1 - t0;
+      }
+      console.log(maxTimestamp);
     }
   );
 }
 
-process.argv.shift(); // skip node.exe
-process.argv.shift(); // skip name of js file
-let n = parseInt(process.argv[0]) || 1;
-
-if (isMainThread) {
-  // for (let i = 1; i <= 20; i++) {
-  console.log(n);
-  var t0 = performance.now();
-  for (let j = 0; j < n; j++) {
-    new Worker(__filename, { workerData: { num: j } });
-  }
-  var t1 = performance.now();
-  console.log(t1 - t0);
-  // }
-} else {
-  addBook(workerData.num, "title" + workerData.num, "author" + workerData.num);
-}
+var t0 = performance.now();
+async.parallel(list);

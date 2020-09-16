@@ -31,6 +31,7 @@ app.get("/api/books/:id", function (req, res, next) {
 
 app.post("/api/addbook", function (req, res, next) {
   const { id, title, author } = req.body;
+  console.log({ id, title, author });
 
   const addedBook = Library.addBook(id, title, author);
   res.status(201);
