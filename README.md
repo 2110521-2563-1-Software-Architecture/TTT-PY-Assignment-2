@@ -7,12 +7,12 @@
 4. Yanika Dontong 6031010021
 5. Natthanon Manop 6031013021
 ## Things to be delivered:
-1. Graphs showing the benchmarking results with the explanation of your experimental settings.
-* Single client with a small call to insert a book item, a bigger call to insert a list of multiple book items. 
+1. Graphs showing the benchmarking results with the explanation of your experimental settings. </br>
+* Single client with a small call to insert a book item, a bigger call to insert a list of multiple book items. </br>
 ![](https://i.imgur.com/3j09doy.png)
-* Multiple clients with different kind of calls 
+* Multiple clients with different kind of calls </br>
 ![](https://i.imgur.com/grr5D4y.png)
-* Vary the number of concurrent calls from 1 to 4096 calls. 
+* Vary the number of concurrent calls from 1 to 4096 calls. </br>
 ![](https://i.imgur.com/oHVokAu.png)
 ---
 
